@@ -1,0 +1,63 @@
+import requests
+import tkinter
+from tkinter import *
+from tkinter import messagebox
+from requests.exceptions import HTTPError
+import json
+
+root = Tk()
+root.geometry ("200x200")
+map_uuid=""
+map_Name=""
+
+
+response = requests.get("https://valorant-api.com/v1/maps")
+data_response = response.json()
+
+
+
+def getValues():
+    
+    for i in data_response:
+        map_uuid = data_response["data"]["uuid"]
+        str(map_uuid)
+    
+    for i in data_response:
+        map_Name = data_response["data"]["displayName"]
+        str(map_Name)
+
+
+def show():
+    getValues()
+    label.config(text = map_uuid)
+    
+print(response.status_code)
+     
+options = [ 
+    "Ascent", 
+    "Split", 
+    "Fracture", 
+    "Bind", 
+    "Breeze", 
+    "District", 
+    "Kasbah",
+    "Drift",
+    "Piazza",
+    "Lotus",
+    "Sunset",
+    "Pearl",
+    "Icebox",
+    "The Range",
+    "Haven"
+] 
+  
+clicked = StringVar() 
+clicked.set( "Ascent" ) 
+drop = OptionMenu( root , clicked , *options ) 
+drop.pack() 
+button = Button( root , text = "click Me" , command = show ).pack() 
+
+label = Label( root , text = " " ) 
+label.pack() 
+
+root.mainloop()
